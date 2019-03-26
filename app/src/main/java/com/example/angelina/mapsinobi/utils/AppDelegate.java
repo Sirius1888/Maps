@@ -1,0 +1,1 @@
+package com.example.angelina.mapsinobi.utils;import android.app.Application;import android.content.Context;public class AppDelegate extends Application {    private static Context context;    @Override    public void onCreate() {        super.onCreate();        context = this;        PrefUtil.init(this);    }}

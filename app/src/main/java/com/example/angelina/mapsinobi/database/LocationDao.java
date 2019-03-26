@@ -18,7 +18,11 @@ public interface LocationDao {
     DataLocation getDataLocation(long id);
 
     @Insert
-    void addNewPlace(DataLocation myLoc);
+    void addNewRouter(DataLocation myLoc);
+
+    @Insert
+    void addNewPoint(DataLocation myLoc);
+
 
 
 }
