@@ -94,13 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -214,12 +207,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @OnClick({R.id.increase_zoom_btn, R.id.decrease_zoom_btn, R.id.location_btn,
             R.id.history_btn, R.id.start_router_btn})
     public void actionButton(View view) {
+        int zoom = 1000;
         switch (view.getId()) {
-            case R.id.increase_zoom_btn:
 
+            case R.id.increase_zoom_btn:
+                    zoom += 250;
+//                    mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
+                mMap.animateCamera(CameraUpdateFactory.zoomIn());
                 break;
             case R.id.decrease_zoom_btn:
-
+                    zoom -= 250;
+//                    mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
+                mMap.animateCamera(CameraUpdateFactory.zoomOut());
                 break;
             case R.id.location_btn:
                 mMap.clear();
