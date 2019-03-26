@@ -2,6 +2,8 @@ package com.example.angelina.mapsinobi.ui.activity.main.view;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.angelina.mapsinobi.R;
 import com.example.angelina.mapsinobi.AppDatabase;
@@ -14,7 +16,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, MapsView {
+
+    @BindView(R.id.increase_zoom_btn) Button increaseMapBtn;
+    @BindView(R.id.decrease_zoom_btn) Button decreaseMapBtn;
+
+    @BindView(R.id.location_btn) Button locationBtn;
+
+    @BindView(R.id.history_btn) Button historyBtn;
+    @BindView(R.id.start_router_btn) Button startRouterBtn;
+
 
     private GoogleMap mMap;
     private MapsPresenter presenter;
@@ -55,5 +69,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void setPresenter(MapsPresenter presenter) {
         this.presenter = presenter;
+    }
+
+
+    @OnClick({R.id.increase_zoom_btn, R.id.decrease_zoom_btn, R.id.location_btn,
+            R.id.history_btn, R.id.start_router_btn})
+    public void actionButton(View view) {
+        switch (view.getId()) {
+            case R.id.increase_zoom_btn:
+
+                break;
+            case R.id.decrease_zoom_btn:
+
+                break;
+            case R.id.location_btn:
+
+                break;
+            case R.id.history_btn:
+
+                break;
+            case R.id.start_router_btn:
+
+                break;
+        }
     }
 }

@@ -8,12 +8,59 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.main.view.MapsActivity">
 
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:text="Demo Button"
+        android:id="@+id/increase_zoom_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|center"
+        android:background="@drawable/round_button"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:paddingRight="10dp"/>
+        android:text="+"
+        android:layout_marginBottom="64dp"
+        android:layout_marginRight="8dp"/>
+
+    <Button
+        android:id="@+id/decrease_zoom_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|center"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:text="-"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <Button
+        android:id="@+id/location_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|center"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:text="l"
+        android:layout_marginTop="72dp"
+        android:layout_marginRight="8dp"/>
+
+    <Button
+        android:id="@+id/history_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|bottom"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:text="h"
+        android:layout_marginBottom="96dp"
+        android:layout_marginRight="8dp"/>
+
+    <Button
+        android:id="@+id/start_router_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|bottom"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:text="s"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"/>
 </fragment>
