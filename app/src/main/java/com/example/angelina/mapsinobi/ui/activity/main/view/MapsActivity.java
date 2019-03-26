@@ -1,12 +1,12 @@
-package com.example.angelina.mapsinobi.ui.view;
+package com.example.angelina.mapsinobi.ui.activity.main.view;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import com.example.angelina.mapsinobi.R;
-import com.example.angelina.mapsinobi.ui.AppDatabase;
-import com.example.angelina.mapsinobi.ui.presenter.MapsPresenter;
-import com.example.angelina.mapsinobi.ui.presenter.MapsPresenterImpl;
+import com.example.angelina.mapsinobi.AppDatabase;
+import com.example.angelina.mapsinobi.ui.activity.main.presenter.MapsPresenter;
+import com.example.angelina.mapsinobi.ui.activity.main.presenter.MapsPresenterImpl;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

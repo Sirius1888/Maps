@@ -1,10 +1,10 @@
-package com.example.angelina.mapsinobi.ui.database;
+package com.example.angelina.mapsinobi.database;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.example.angelina.mapsinobi.ui.model.DataLocation;
+import com.example.angelina.mapsinobi.model.DataLocation;
 
 import java.util.List;
 

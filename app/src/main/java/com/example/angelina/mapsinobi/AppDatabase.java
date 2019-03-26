@@ -1,14 +1,13 @@
-package com.example.angelina.mapsinobi.ui;
+package com.example.angelina.mapsinobi;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.location.Location;
 
-import com.example.angelina.mapsinobi.ui.database.LocationDao;
-import com.example.angelina.mapsinobi.ui.model.DataLocation;
-import com.example.angelina.mapsinobi.ui.model.LocationParameters;
+import com.example.angelina.mapsinobi.database.LocationDao;
+import com.example.angelina.mapsinobi.model.DataLocation;
+import com.example.angelina.mapsinobi.model.LocationParameters;
 
 @Database(entities = {
         DataLocation.class,

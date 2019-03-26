@@ -1,6 +1,5 @@
-package com.example.angelina.mapsinobi.ui.model;
+package com.example.angelina.mapsinobi.model;
 
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
