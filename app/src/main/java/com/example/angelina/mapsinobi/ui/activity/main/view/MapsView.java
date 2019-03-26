@@ -1,10 +1,13 @@
 package com.example.angelina.mapsinobi.ui.activity.main.view;
 
 import android.location.Location;
-import android.location.LocationManager;
 
 import com.example.angelina.mapsinobi.BaseView;
+import com.example.angelina.mapsinobi.model.LatLgnParametersEntity;
 import com.example.angelina.mapsinobi.ui.activity.main.presenter.MapsPresenter;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
 
 public interface MapsView extends BaseView<MapsPresenter> {
 
@@ -15,4 +18,6 @@ public interface MapsView extends BaseView<MapsPresenter> {
 
     void showToast(String message);
 
+    void drawRoute(List<LatLng> lpLiist);
+    void addPoints(List<LatLgnParametersEntity> list);
 }

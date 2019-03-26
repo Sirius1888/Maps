@@ -6,12 +6,12 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.example.angelina.mapsinobi.database.LocationDao;
-import com.example.angelina.mapsinobi.model.DataLocation;
-import com.example.angelina.mapsinobi.model.LocationParameters;
+import com.example.angelina.mapsinobi.model.LatLgnParametersEntity;
+import com.example.angelina.mapsinobi.model.LocationEntity;
 
 @Database(entities = {
-        DataLocation.class,
-        LocationParameters.class}, version = 1, exportSchema = true)
+        LocationEntity.class,
+        LatLgnParametersEntity.class}, version = 1, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
 
 

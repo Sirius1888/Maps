@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">MapsInobi</string>
     <string name="title_activity_maps">Map</string>
+    <string name="history">История</string>
+    <string name="empty_history">История пуста</string>
 </resources>

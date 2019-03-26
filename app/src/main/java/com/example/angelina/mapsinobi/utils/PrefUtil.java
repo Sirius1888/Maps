@@ -14,7 +14,8 @@ public class PrefUtil {
     private static final String      LAT = "lat";
     private static final String      LON = "lon";
     private static final String      TIME = "time";
-    private static final String      TRACKING = "track";
+    private static final String      TRACKING = "tracking";
+    private static final String      ZOOM = "zoom";
 
     static void init(Context context) {
         sPref = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -50,6 +51,14 @@ public class PrefUtil {
 
     public static void setTracking(boolean tracking) {
         sPref.edit().putBoolean(TRACKING, tracking).apply();
+    }
+
+    public static int getZoom() {
+        return sPref.getInt(ZOOM, 15);
+    }
+
+    public static void setZoom(int zoom) {
+        sPref.edit().putInt(ZOOM, zoom).apply();
     }
 
 

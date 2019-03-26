@@ -3,29 +3,30 @@ package com.example.angelina.mapsinobi.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity
-public class LocationParameters {
-    @PrimaryKey
-    private long id;
+public class LatLgnParametersEntity {
+
+    @PrimaryKey(autoGenerate = false)
+    private long locationId;
     private double lat;
     private double lng;
     private String time;
 
+//    public LatLgnParametersEntity(long locationId, double lat, double lng, String time) {
+//        this.locationId = locationId;
+//        this.lat = lat;
+//        this.lng = lng;
+//        this.time = time;
+//    }
 
-    public LocationParameters(long id, double lat, double lng, String time) {
-        this.id = id;
-        this.lat = lat;
-        this.lng = lng;
-        this.time = time;
+    public long getLocationId() {
+        return locationId;
     }
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setLocationId(long locationId) {
+        this.locationId = locationId;
     }
 
     public double getLat() {
