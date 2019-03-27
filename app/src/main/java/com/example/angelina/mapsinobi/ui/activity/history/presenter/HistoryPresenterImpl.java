@@ -23,7 +23,7 @@ public class HistoryPresenterImpl implements HistoryPresenter {
     public void showAllHistory(){
         if (view != null) {
             List<LocationEntity> historyModel = locationDao.getAllHistory();
-            if (historyModel.size() != 0) {
+            if (historyModel != null && historyModel.size() > 0) {
                 view.showHistory(historyModel);
                 view.showRecyclerView();
             } else {

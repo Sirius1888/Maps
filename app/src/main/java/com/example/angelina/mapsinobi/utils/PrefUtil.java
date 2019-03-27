@@ -8,6 +8,7 @@ import java.util.Date;
 
 public class PrefUtil {
 
+
     private static SharedPreferences sPref;
 
 
@@ -15,7 +16,9 @@ public class PrefUtil {
     private static final String      LON = "lon";
     private static final String      TIME = "time";
     private static final String      TRACKING = "tracking";
+    private static final String      IS_HISTORY = "is_history";
     private static final String      ZOOM = "zoom";
+    private static final String      ID_ROUTE = "id_route";
 
     static void init(Context context) {
         sPref = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -52,6 +55,13 @@ public class PrefUtil {
     public static void setTracking(boolean tracking) {
         sPref.edit().putBoolean(TRACKING, tracking).apply();
     }
+    public static boolean getIsHistory() {
+        return sPref.getBoolean(IS_HISTORY, false);
+    }
+
+    public static void setIsHistory(boolean history) {
+        sPref.edit().putBoolean(IS_HISTORY, history).apply();
+    }
 
     public static int getZoom() {
         return sPref.getInt(ZOOM, 15);
@@ -59,6 +69,14 @@ public class PrefUtil {
 
     public static void setZoom(int zoom) {
         sPref.edit().putInt(ZOOM, zoom).apply();
+    }
+
+    public static long getIdRoute() {
+        return sPref.getLong(ID_ROUTE, -1);
+    }
+
+    public static void setIdRoute(long id) {
+        sPref.edit().putLong(ID_ROUTE, id).apply();
     }
 
 

@@ -26,6 +26,7 @@ import com.example.angelina.mapsinobi.adapter.HistoryDBAdapter;
 import com.example.angelina.mapsinobi.model.LocationEntity;
 import com.example.angelina.mapsinobi.ui.activity.history.presenter.HistoryPresenter;
 import com.example.angelina.mapsinobi.ui.activity.history.presenter.HistoryPresenterImpl;
+import com.example.angelina.mapsinobi.utils.PrefUtil;
 
 import java.util.List;
 
@@ -86,8 +87,11 @@ public class HistoryActivity extends AppCompatActivity implements HistoryContrac
     @Override
     public void clickItem(LocationEntity locationEntity) {
         Intent intent = new Intent();
-        intent.putExtra("routeId", locationEntity.getId());
+        long id = locationEntity.getId();
+        PrefUtil.setIdRoute(id);
+        intent.putExtra("intentId", id);
         setResult(RESULT_OK, intent);
+
         finish();
     }
 

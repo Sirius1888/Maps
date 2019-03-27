@@ -7,7 +7,7 @@ import java.util.List;
 public interface MapsPresenter {
 
     void startRouterMap();
-    void insertLocationData(long locationId);
+    void getLocationRoute(long locationId);
 
     void addPointList(List<LatLgnParametersEntity> list);
 }

@@ -2,6 +2,7 @@ package com.example.angelina.mapsinobi.ui.activity.main.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,8 +10,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -42,8 +41,12 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,8 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private MapsPresenter presenter;
-    public static double lat = 0;
-    public static double lon = 0;
+
     boolean isPressed = false;
 
     private LocationManager locationManager;
@@ -81,10 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
 
-
-
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -95,7 +93,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AppDatabase db = AppDatabase.getDatabase(getApplication());
         presenter = new MapsPresenterImpl(this, db.locationModel());
 
-//        checkPermInternet();
+//        mMap.clear();
+        getLocation();
+        PrefUtil.setIsHistory(false);
+
+//        checkPermInternet()
     }
 
     private void checkPermInternet() {
@@ -145,23 +147,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getLocation() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        if (!PrefUtil.getIsHistory()) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000 * 5, 5, locationListener);
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 1000 * 5, 5,
+                    locationListener
+            );
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000 * 5, 5, locationListener);
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 1000 * 5, 5,
-                locationListener
-        );
     }
 
     @Override
@@ -174,12 +177,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location location) {
             Log.i("LocationChanged", "change");
-            showLocation(location);
+            if (!PrefUtil.getIsHistory()){
+                showLocation(location);
+            }
+
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
             Log.i("LocationOnStatusChanged", "statusChanged");
+
             checkEnabled();
         }
 
@@ -194,7 +201,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return;
             }
             Log.i("LocationChanged", "change");
-            showLocation(locationManager.getLastKnownLocation(provider));
+            if (!PrefUtil.getIsHistory()){
+                showLocation(locationManager.getLastKnownLocation(provider));
+            }
+
         }
 
         @Override
@@ -221,8 +231,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void showNewPosition(Location location) {
-        PrefUtil.setLat(String.valueOf(location.getLatitude()));
-        PrefUtil.setLon(String.valueOf((location.getLongitude())));
+//        PrefUtil.setLat(String.valueOf(location.getLatitude()));
+//        PrefUtil.setLon(String.valueOf((location.getLongitude())));
+
+        Random random = new Random();
+        double r1 = random.nextInt(25) + 1;
+        double r2 = random.nextInt(25) + 1;
+        PrefUtil.setLat(String.valueOf(location.getLatitude() + r1));
+        PrefUtil.setLon(String.valueOf((location.getLongitude() + r2)));
+
         PrefUtil.setTime(new Date(location.getTime()));
         mMap.clear();
         onMapReady(mMap);
@@ -250,7 +267,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void showToast(String message) {
-        new Handler().postDelayed(() -> Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show(),200);
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -271,19 +288,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void drawRoute(List<LatLng> lpList) {
-        PolylineOptions polylineOptions = new PolylineOptions().addAll(lpList).color(Color.YELLOW).width(1);
+//        PolylineOptions polylineOptions = new PolylineOptions().addAll(lpList).color(Color.YELLOW).width(1);
+//        mMap.addPolyline(polylineOptions);
+        PolylineOptions polylineOptions = new PolylineOptions();
+        int size = lpList.size();
+        for (int i = 0; i < size; i++) {
+            polylineOptions.add(new LatLng(lpList.get(i).latitude, lpList.get(i).longitude));
+        }
+        polylineOptions.color(Color.MAGENTA).width(10);
         mMap.addPolyline(polylineOptions);
-        locationBtn.setVisibility(View.INVISIBLE);
-        closeStoryBtn.setVisibility(View.VISIBLE);
 
+        hideButtons();
+        PrefUtil.setIsHistory(true);
+
+    }
+
+    private void hideButtons() {
+        closeStoryBtn.setVisibility(View.VISIBLE);
+        locationBtn.setVisibility(View.INVISIBLE);
+        historyBtn.setVisibility(View.INVISIBLE);
+        startRouterBtn.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.close_router)
     public void close(View view) {
-        closeStoryBtn.setVisibility(View.GONE);
-        locationBtn.setVisibility(View.VISIBLE);
+        showButtons();
         mMap.clear();
         getLocation();
+        PrefUtil.setIsHistory(false);
+    }
+
+    private void showButtons() {
+        closeStoryBtn.setVisibility(View.INVISIBLE);
+        locationBtn.setVisibility(View.VISIBLE);
+        historyBtn.setVisibility(View.VISIBLE);
+        startRouterBtn.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.increase_zoom_btn, R.id.decrease_zoom_btn})
@@ -325,8 +364,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (data == null) {
             return;
         }
-        String routeId = data.getStringExtra("routeId");
-        presenter.insertLocationData(Long.parseLong(routeId));
+        if (requestCode == 1){
+            if(resultCode == Activity.RESULT_OK) {
+                String routeId = data.getStringExtra("intentId");
+                presenter.getLocationRoute(PrefUtil.getIdRoute());
+            } else {
+                showToast("Произошла ошибка с выбором маршрута");
+            }
+        }
     }
 
     @OnClick(R.id.start_router_btn)

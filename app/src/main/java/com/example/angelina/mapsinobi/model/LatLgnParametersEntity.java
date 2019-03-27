@@ -8,7 +8,8 @@ import java.util.Date;
 @Entity
 public class LatLgnParametersEntity {
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private long locationId;
     private double lat;
     private double lng;
@@ -20,6 +21,15 @@ public class LatLgnParametersEntity {
 //        this.lng = lng;
 //        this.time = time;
 //    }
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getLocationId() {
         return locationId;
